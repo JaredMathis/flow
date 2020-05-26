@@ -1,0 +1,23 @@
+{
+  "name": "add",
+  "inputs": [
+    {
+      "name": "x",
+      "type": "int"
+    },
+    {
+      "name": "y",
+      "type": "int"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "sum",
+      "type": "int"
+    }
+  ],
+  "root": {
+    "type": "expression",
+    "expression": "sum=x+y"
+  }
+}

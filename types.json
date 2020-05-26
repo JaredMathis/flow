@@ -1,10 +1,4 @@
 [
-    { 
-        "type": "integer",
-        "keyword": "int"
-    },    
-    { 
-        "type": "character",
-        "keyword": "char"
-    }
+    "int",    
+    "char"
 ]
