@@ -1,6 +1,9 @@
 
 const u = require("wlj-utilities");
 
+const assertIsFunction = require("./assertIsFunction");
+const assertIsFunctionName = require("./assertIsFunctionName");
+
 module.exports = defineFunction;
 
 function defineFunction(name, inputs, outputs, root) {
@@ -15,7 +18,7 @@ function defineFunction(name, inputs, outputs, root) {
         u.merge(x,{outputs});
         u.merge(x,{root});
         
-        u.assert(() => u.isString(name));
+        assertIsFunctionName(name);
         u.assert(() => u.isArray(inputs));
         u.assert(() => u.isArray(outputs));
         u.assert(() => u.isDefined(root));
@@ -26,6 +29,8 @@ function defineFunction(name, inputs, outputs, root) {
             outputs,
             root,
         };
+
+        assertIsFunction(result);
     });
     return result;
 }

@@ -8,7 +8,7 @@ function evaluate(expression) {
     u.scope(evaluate.name, x => {
         u.assert(() => u.isString(expression));
         result = {
-            type: 'expression',
+            type: 'evaluate',
             expression,
         }
     });

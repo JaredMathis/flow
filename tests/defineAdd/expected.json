@@ -17,7 +17,7 @@
     }
   ],
   "root": {
-    "type": "expression",
+    "type": "evaluate",
     "expression": "sum=x+y"
   }
 }

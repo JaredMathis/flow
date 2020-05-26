@@ -7,6 +7,4 @@ require("./tests/type/type.js");
 require("./tests/evaluate/evaluate.js");
 require("./tests/getTypes/getTypes.js");
 require("./tests/defineAdd/defineAdd.js");
-require("./tests/compile/compile.js");
-require("./tests/assertIsFunction/assertIsFunction.js");
-require("./tests/assertIsFunctionName/assertIsFunctionName.js");
+require("./tests/execute/execute.js");

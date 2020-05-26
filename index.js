@@ -7,3 +7,6 @@ module.exports.assertIsValidType = require("./library/assertIsValidType.js");
 module.exports.type = require("./library/type.js");
 module.exports.evaluate = require("./library/evaluate.js");
 module.exports.getTypes = require("./library/getTypes.js");
+module.exports.compile = require("./library/compile.js");
+module.exports.assertIsFunction = require("./library/assertIsFunction.js");
+module.exports.assertIsFunctionName = require("./library/assertIsFunctionName.js");
