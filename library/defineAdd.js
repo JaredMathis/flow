@@ -3,7 +3,7 @@ const u = require("wlj-utilities");
 
 const defineFunction = require("./defineFunction");
 const variable = require("./variable");
-const type = require("./type");
+const typeInt = require("./typeInt");
 const evaluate = require("./evaluate");
 const getTypes = require("./getTypes");
 
@@ -17,11 +17,11 @@ function defineAdd() {
         result = defineFunction(
             'add', 
             [
-                variable('x', type('int', types)),
-                variable('y', type('int', types)),
+                variable('x', typeInt()),
+                variable('y', typeInt()),
             ],
             [
-                variable('sum', type('int', types)),
+                variable('sum', typeInt()),
             ],
             evaluate('sum=x+y')
         );

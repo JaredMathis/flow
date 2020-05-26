@@ -12,3 +12,5 @@ module.exports.assertIsFunction = require("./library/assertIsFunction.js");
 module.exports.assertIsFunctionName = require("./library/assertIsFunctionName.js");
 module.exports.compileAssertIsType = require("./library/compileAssertIsType.js");
 module.exports.package = require("./library/package.js");
+module.exports.defineSum = require("./library/defineSum.js");
+module.exports.typeInt = require("./library/typeInt.js");
