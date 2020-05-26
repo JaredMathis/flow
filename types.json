@@ -1,0 +1,10 @@
+[
+    { 
+        "type": "integer",
+        "keyword": "int"
+    },    
+    { 
+        "type": "character",
+        "keyword": "char"
+    }
+]
