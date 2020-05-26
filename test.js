@@ -10,3 +10,5 @@ require("./tests/defineAdd/defineAdd.js");
 require("./tests/compile/compile.js");
 require("./tests/assertIsFunction/assertIsFunction.js");
 require("./tests/assertIsFunctionName/assertIsFunctionName.js");
+require("./tests/compileAssertIsType/compileAssertIsType.js");
+require("./tests/package/package.js");

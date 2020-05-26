@@ -10,3 +10,5 @@ module.exports.getTypes = require("./library/getTypes.js");
 module.exports.compile = require("./library/compile.js");
 module.exports.assertIsFunction = require("./library/assertIsFunction.js");
 module.exports.assertIsFunctionName = require("./library/assertIsFunctionName.js");
+module.exports.compileAssertIsType = require("./library/compileAssertIsType.js");
+module.exports.package = require("./library/package.js");

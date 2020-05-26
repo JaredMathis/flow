@@ -1,6 +1,5 @@
 
 const u = require("wlj-utilities");
-
 module.exports = compile;
 
 function compile(f) {
@@ -15,7 +14,10 @@ function compile(f) {
             result.push([`  ${i.name},`]);
         });
         result.push([`  ) {`]);
-        result.push([`  const outputs = {};`])
+        u.loop(f.inputs, i => {
+            result.push([`  compileAssertIsType(${i.name}, "${i.type}");`]);
+        });
+        result.push([`  const outputs = {};`]);
         u.loop(f.outputs, o => {
             result.push([`  ${o.name} = null;`]);
         });
