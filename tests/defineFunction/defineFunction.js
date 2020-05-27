@@ -24,4 +24,11 @@ u.scope(__filename, x => {
         variable('a', typeInt()),
         variable('a', typeInt()),
     ], evaluate(";")));
+
+    // Input cannot contain function name
+    u.assertThrows(() => defineFunction('functionName', [
+        variable('functionName', typeInt()),
+    ], [
+
+    ], evaluate(";")));
 });
