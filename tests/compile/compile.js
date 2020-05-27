@@ -4,6 +4,7 @@ const { EOL } = require('os');
 
 const compile = require("../../library/compile.js");
 const defineAdd = require("../../library/defineAdd.js");
+const defineSum = require("../../library/defineSum.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 
 u.scope(__filename, x => {
@@ -23,7 +24,6 @@ u.scope(__filename, x => {
     u.assert(() => u.throws(() => add('a', 'b')['sum'] === 3));
     u.assert(() => u.throws(() => add(1, 'b')['sum'] === 3));
 
-    return;
     syntax = defineSum();
     lines = compile(syntax);
     text = lines.join(EOL);

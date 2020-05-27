@@ -23,6 +23,12 @@ function defineFunction(name, inputs, outputs, root) {
         u.assert(() => u.isArray(outputs));
         u.assert(() => u.isDefined(root));
 
+        let inputNames = inputs.map(i => i.name);
+        u.merge(x, {inputNames});
+        let duplicates = u.arrayContainsDuplicates(inputNames);
+        u.merge(x, {duplicates});
+        u.assert(() => !duplicates);
+
         result = {
             name,
             inputs,
