@@ -21,6 +21,7 @@ u.scope(__filename, x => {
     u.assertThrows(() => defineFunction('functionName', [
 
     ], [
-
+        variable('a', typeInt()),
+        variable('a', typeInt()),
     ], evaluate(";")));
 });

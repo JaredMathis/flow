@@ -25,9 +25,11 @@ function defineFunction(name, inputs, outputs, root) {
 
         let inputNames = inputs.map(i => i.name);
         u.merge(x, {inputNames});
-        let duplicates = u.arrayContainsDuplicates(inputNames);
-        u.merge(x, {duplicates});
-        u.assert(() => !duplicates);
+        u.assert(() => !u.arrayContainsDuplicates(inputNames));
+
+        let outputNames = outputs.map(i => i.name);
+        u.merge(x, {outputNames});
+        u.assert(() => !u.arrayContainsDuplicates(outputNames));
 
         result = {
             name,
