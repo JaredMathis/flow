@@ -6,7 +6,9 @@ module.exports = typeInt;
 function typeInt() {
     let result;
     u.scope(typeInt.name, x => {
-        result = 'int';
+        result = {
+            $type: 'typeInt',
+        };
     });
     return result;
 }

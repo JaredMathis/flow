@@ -8,6 +8,4 @@ const defineSum = require("../../library/defineSum.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 
 require('./defineAdd');
-
-// TODO:
-//require('./defineSum');
+require('./defineSum');

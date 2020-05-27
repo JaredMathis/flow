@@ -1,7 +1,7 @@
 
 const u = require("wlj-utilities");
 
-const defineSum = require("../../library/defineSum.js");
+const execute = require("../../library/execute.js");
 
 u.scope(__filename, x => {
     // TODO

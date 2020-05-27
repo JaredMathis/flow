@@ -34,6 +34,7 @@ function defineFunction(name, inputs, outputs, root) {
         u.assert(() => !u.arrayContainsDuplicates(outputNames));
 
         result = {
+            $type: 'defineFunction',
             name,
             inputs,
             outputs,
