@@ -29,7 +29,8 @@ u.scope(__filename, x => {
     }
 
     try {
-        // Basic sum should work
+        // For some reason, sum needs to be re-defined
+        // hence eval-ing... before the calls.
         eval(getEval());
         u.assert(() => sum({array:[]})['result'] === 0);
         u.assert(() => sum({array:[1]})['result'] === 1);
