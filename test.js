@@ -22,3 +22,4 @@ require("./tests/loop/loop.js");
 require("./tests/execute/execute.js");
 require("./tests/getRoots/getRoots.js");
 require("./tests/compileAssertHasOwnProperty/compileAssertHasOwnProperty.js");
+require("./tests/defineCount/defineCount.js");

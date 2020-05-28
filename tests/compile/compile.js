@@ -9,3 +9,4 @@ const compileAssertIsType = require("../../library/compileAssertIsType.js");
 
 require('./defineAdd');
 require('./defineSum');
+require('./defineCount');

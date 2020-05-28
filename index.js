@@ -22,3 +22,4 @@ module.exports.loop = require("./library/loop.js");
 module.exports.execute = require("./library/execute.js");
 module.exports.getRoots = require("./library/getRoots.js");
 module.exports.compileAssertHasOwnProperty = require("./library/compileAssertHasOwnProperty.js");
+module.exports.defineCount = require("./library/defineCount.js");

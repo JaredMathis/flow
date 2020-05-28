@@ -62,11 +62,15 @@ function compile(f, fns) {
 function processRoot(root, lines, indent, fns) {
     let result;
     u.scope(processRoot.name, x => {
-        u.merge(x, {root, lines, indent})
+        u.merge(x, {root, lines, indent, fns});
+
         u.assert(() => u.isDefined(root));
         u.assertIsStringArray(lines);
         u.assert(() => u.isString(indent));
         u.assert(() => u.isArray(fns));
+
+        let fnsNames = fns.map(f => f.name);
+        u.merge(x,{fnsNames});
 
         let types = {
             evaluate: () => lines.push(`${indent}eval("${root.expression}")`),
