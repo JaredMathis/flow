@@ -23,3 +23,8 @@ require("./tests/execute/execute.js");
 require("./tests/getRoots/getRoots.js");
 require("./tests/compileAssertHasOwnProperty/compileAssertHasOwnProperty.js");
 require("./tests/defineCount/defineCount.js");
+require("./tests/defineAverage/defineAverage.js");
+require("./tests/block/block.js");
+require("./tests/getLibrary/getLibrary.js");
+require("./tests/defineDivide/defineDivide.js");
+require("./tests/ifElse/ifElse.js");

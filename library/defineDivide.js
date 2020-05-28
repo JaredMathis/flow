@@ -6,13 +6,13 @@ const variable = require("./variable");
 const typeInt = require("./typeInt");
 const evaluate = require("./evaluate");
 
-module.exports = defineAdd;
+module.exports = defineDivide;
 
-function defineAdd() {
+function defineDivide() {
     let result;
-    u.scope(defineAdd.name, x => {        
+    u.scope(defineDivide.name, x => {        
         result = defineFunction(
-            'add', 
+            'divide', 
             [
                 variable('x', typeInt()),
                 variable('y', typeInt()),
@@ -20,7 +20,7 @@ function defineAdd() {
             [
                 variable('result', typeInt()),
             ],
-            evaluate('result=x+y')
+            evaluate('result=Math.floor(x/y);')
         );
     });
     return result;

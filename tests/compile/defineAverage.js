@@ -3,8 +3,11 @@ const u = require("wlj-utilities");
 const { EOL } = require('os');
 
 const compile = require("../../library/compile.js");
-const defineCount = require("../../library/defineCount.js");
+const defineSum = require("../../library/defineSum.js");
 const defineAdd = require("../../library/defineAdd.js");
+const defineCount = require("../../library/defineCount.js");
+const defineAverage = require("../../library/defineAverage.js");
+const defineDivide = require("../../library/defineDivide.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 const compileAssertHasOwnProperty = require("../../library/compileAssertHasOwnProperty.js");
 const library = require('../../library/getLibrary')();
@@ -23,26 +26,37 @@ u.scope(__filename, x => {
     // Compile add so that when sum is called,
     // Add will be defined.
     compileDefinition(defineAdd(), library);
+    compileDefinition(defineDivide(), library);
+    compileDefinition(defineSum(), library);
     compileDefinition(defineCount(), library);
+    compileDefinition(defineAverage(), library);
 
     function getEval() {
         return compiles.join(EOL);
     }
 
     try {
+        // For some reason, sum needs to be re-defined
+        // hence eval-ing... before the calls.
         eval(getEval());
-        u.assert(() => count({array:[]})['result'] === 0);
-        u.assert(() => count({array:[1]})['result'] === 1);
+        let result;
+        result = average({array:[1]})['result'];
+        u.assert(() => result === 1);
         eval(getEval());
-        u.assert(() => count({array:[2]})['result'] === 1);
+        result = average({array:[2]});
+        u.merge(x,{result})
+        u.assert(() => result['result'] === 2);
         eval(getEval());
-        u.assert(() => count({array:[1,2]})['result'] === 2);
+        u.assert(() => average({array:[1,2]})['result'] === 1);
         eval(getEval());
-        u.assert(() => count({array:[2,2]})['result'] === 2);
+        u.assert(() => average({array:[2,2]})['result'] === 2);
         eval(getEval());
-        u.assert(() => count({array:[2,3]})['result'] === 2);
+        u.assert(() => average({array:[2,3]})['result'] === 2);
         eval(getEval());
-        u.assert(() => count({array:[1,2,3]})['result'] === 3);
+        u.assert(() => average({array:[1,2,3]})['result'] === 2);
+        
+        // You cannot average an empty array.
+        u.assertThrows(() => average({array:[]}));
     } catch (e) {
         u.loop(compiles, c => {
             console.log();

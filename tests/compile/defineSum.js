@@ -7,6 +7,7 @@ const defineSum = require("../../library/defineSum.js");
 const defineAdd = require("../../library/defineAdd.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 const compileAssertHasOwnProperty = require("../../library/compileAssertHasOwnProperty.js");
+const library = require('../../library/getLibrary')();
 
 u.scope(__filename, x => {
     let compiles = [];
@@ -21,8 +22,8 @@ u.scope(__filename, x => {
 
     // Compile add so that when sum is called,
     // Add will be defined.
-    compileDefinition(defineAdd(), []);
-    compileDefinition(defineSum(), [defineAdd()]);
+    compileDefinition(defineAdd(), library);
+    compileDefinition(defineSum(), library);
 
     function getEval() {
         return compiles.join(EOL);

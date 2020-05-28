@@ -8,5 +8,7 @@ const defineSum = require("../../library/defineSum.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 
 require('./defineAdd');
+require('./defineDivide');
 require('./defineSum');
 require('./defineCount');
+require('./defineAverage');

@@ -30,7 +30,7 @@ function defineCount() {
                 loop('array', 'a', 'index',
                     execute('add', 
                         {'x':'result', 'y':'one'},
-                        {'sum':'result'}),
+                        {'result':'result'}),
                     )
             ]),
         );

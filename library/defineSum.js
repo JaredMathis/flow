@@ -28,7 +28,7 @@ function defineSum() {
                 loop('array', 'a', 'index',
                     execute('add', 
                         {'x':'result', 'y':'a'},
-                        {'sum':'result'}),
+                        {'result':'result'}),
                     )
             ]),
         );

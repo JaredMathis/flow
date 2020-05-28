@@ -10,6 +10,7 @@ function getRoots() {
     let result;
     u.scope(getRoots.name, x => {
         result = [
+            'block',
             'evaluate',
             'execute',
             'loop',
