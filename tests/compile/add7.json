@@ -1,0 +1,10 @@
+{
+  "input": {
+    "x": 3,
+    "y": 2
+  },
+  "output": {
+    "result": 5
+  },
+  "name": "add"
+}

@@ -45,3 +45,4 @@ test("./add3.json");
 test("./add4.json");
 test("./add5.json");
 test("./add6.json");
+test("./add7.json");
