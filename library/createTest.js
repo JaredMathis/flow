@@ -41,7 +41,7 @@ function createTest() {
             return parsed;
         };
 
-        console.log('Here are the inputs for that flow:', flow.inputs);
+        console.log(`Here are the inputs for ${flow.name}:`, flow.inputs);
         u.loop(flow.inputs, input => {
             let getValue = types[input.type.$type];
             u.assert(() => u.isDefined(getValue));
@@ -50,7 +50,7 @@ function createTest() {
             test.input[input.name] = value;
         });
 
-        console.log('Here are the outputs for that flow:', flow.outputs);
+        console.log(`Here are the outputs for ${flow.name}:`, flow.outputs);
         u.loop(flow.outputs, output => {
             let action = types[output.type.$type];
             u.assert(() => u.isDefined(action));

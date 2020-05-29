@@ -1,0 +1,10 @@
+{
+  "input": {
+    "x": 9,
+    "y": 3
+  },
+  "output": {
+    "result": 3
+  },
+  "name": "divide"
+}
