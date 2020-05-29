@@ -1,5 +1,6 @@
 module.exports = {};
 module.exports.getTypesPath = require("./library/getTypesPath.js");
+module.exports.add = require("./library/defineAdd.js");
 module.exports.defineFunction = require("./library/defineFunction.js");
 module.exports.variable = require("./library/variable.js");
 module.exports.assertIsValidType = require("./library/assertIsValidType.js");
