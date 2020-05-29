@@ -1,0 +1,10 @@
+{
+  "input": {
+    "x": -9,
+    "y": -9
+  },
+  "output": {
+    "result": 81
+  },
+  "name": "multiply"
+}

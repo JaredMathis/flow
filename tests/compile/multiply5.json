@@ -1,0 +1,10 @@
+{
+  "input": {
+    "x": 4,
+    "y": 1
+  },
+  "output": {
+    "result": 4
+  },
+  "name": "multiply"
+}

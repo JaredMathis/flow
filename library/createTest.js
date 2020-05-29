@@ -8,24 +8,14 @@ const path = require('path');
 
 module.exports = createTest;
 
-function createTest() {
+function createTest(remaining) {
     let result;
     u.scope(createTest.name, x => {
-        let valid;
-        
-        let name;
-        valid = false;
-        while (!valid) {
-            const names = library.map(f => f.name);
-            names.sort();
-            name = readlineSync.question('What flow do you want to test? ');
-            if (names.includes(name)) {
-                valid = true;
-            } else {
-                console.log('Invalid flow name. Valid flow names:');
-                u.loop(names, n => console.log(n));
-            }
-        }
+        u.assert(() => u.isArray(remaining));
+        u.assert(() => remaining.length === 1);
+        u.assert(() => u.isString(remaining[0]));
+
+        let name = remaining[0];
 
         let flow = u.arraySingle(library, {name});
 
