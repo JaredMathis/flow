@@ -41,3 +41,7 @@ function test(path) {
 
 test("./add.json");
 test("./add2.json");
+test("./add3.json");
+test("./add4.json");
+test("./add5.json");
+test("./add6.json");
