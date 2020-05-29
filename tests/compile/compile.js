@@ -3,9 +3,8 @@ const u = require("wlj-utilities");
 const { EOL } = require('os');
 
 const compile = require("../../library/compile.js");
-const defineAdd = require("../../library/defineAdd.js");
-const defineSum = require("../../library/defineSum.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
+const compileAssertHasOwnProperty = require("../../library/compileAssertHasOwnProperty.js");
 const library = require('../../library/getLibrary')();
 
 require('./defineAdd');
@@ -15,12 +14,30 @@ require('./defineCount');
 require('./defineAverage');
 
 function test(path) {
-    let parsed = require(path);
+    u.scope(test.name, x => {
+        let parsed = require(path);
 
-    let definition = u.arraySingle(library, {name:parsed.name});
-    u.assert(() => u.isDefined(definition));
-
+        let compiles = [];
     
+        function compileDefinition(fn, fns) {
+            u.merge(x,{fn});
+            let lines = compile(fn, fns);
+            let compiled = lines.join(EOL);
+            compiles.push(compiled);
+            return compiled;
+        }
+    
+        u.loop(library, l => compileDefinition(l, library));
+
+        let text = compiles.join(EOL);
+        eval(text);
+
+        let actual;
+        eval(`actual = ${parsed.name}(${JSON.stringify(parsed.input)})`);
+
+        u.assertIsEqualJson(() => actual, () => parsed.output);
+    });
 }
 
 test("./add.json");
+test("./add2.json");

@@ -30,8 +30,8 @@ function createTest() {
         let flow = u.arraySingle(library, {name});
 
         let test = {
-            inputs: [],
-            outputs: [],
+            input: {},
+            output: {},
         };
         test.name = name;
 
@@ -43,11 +43,11 @@ function createTest() {
 
         console.log('Here are the inputs for that flow:', flow.inputs);
         u.loop(flow.inputs, input => {
-            let action = types[input.type.$type];
-            u.assert(() => u.isDefined(action));
+            let getValue = types[input.type.$type];
+            u.assert(() => u.isDefined(getValue));
             let userInput = readlineSync.question(`What value for input ${input.name}? `);
-            let value = action(userInput);
-            test.inputs.push({ name: input.name, value });
+            let value = getValue(userInput);
+            test.input[input.name] = value;
         });
 
         console.log('Here are the outputs for that flow:', flow.outputs);
@@ -56,7 +56,7 @@ function createTest() {
             u.assert(() => u.isDefined(action));
             let userInput = readlineSync.question(`What value for output ${output.name}? `);
             let value = action(userInput);
-            test.inputs.push({ name: output.name, value });
+            test.output[output.name] = value;
         });
 
         let directory = './tests/compile';
@@ -68,6 +68,8 @@ function createTest() {
         let testsFile = path.join(directory, 'compile.js');
         fs.appendFileSync(testsFile, EOL);
         fs.appendFileSync(testsFile, `test("./${path.basename(testFile)}");`);
+
+        require('./../test');
     });
     return result;
 }
