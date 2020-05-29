@@ -56,3 +56,4 @@ test("./divide4.json");
 test("./divide5.json");
 test("./divide6.json");
 test("./divide7.json");
+test("./multiply.json");

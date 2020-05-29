@@ -30,3 +30,4 @@ module.exports.defineDivide = require("./library/defineDivide.js");
 module.exports.ifElse = require("./library/ifElse.js");
 module.exports.createTest = require("./library/createTest.js");
 module.exports.createFlow = require("./library/createFlow.js");
+module.exports.defineMultiply = require("./library/defineMultiply.js");
