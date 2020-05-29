@@ -27,5 +27,4 @@ module.exports.defineAverage = require("./library/defineAverage.js");
 module.exports.block = require("./library/block.js");
 module.exports.getLibrary = require("./library/getLibrary.js");
 module.exports.defineDivide = require("./library/defineDivide.js");
-module.exports.elseIf = require("./library/elseIf.js");
 module.exports.ifElse = require("./library/ifElse.js");
