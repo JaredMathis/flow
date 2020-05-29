@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/JaredMathis/flow#readme",
   "dependencies": {
-    "wlj-utilities": "^1.0.43"
+    "readline-sync": "^1.4.10",
+    "wlj-utilities": "^1.0.48"
   }
 }

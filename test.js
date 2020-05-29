@@ -28,3 +28,4 @@ require("./tests/block/block.js");
 require("./tests/getLibrary/getLibrary.js");
 require("./tests/defineDivide/defineDivide.js");
 require("./tests/ifElse/ifElse.js");
+require("./tests/createTest/createTest.js");

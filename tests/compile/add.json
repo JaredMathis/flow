@@ -1,0 +1,18 @@
+{
+  "inputs": [
+    {
+      "name": "x",
+      "value": 0
+    },
+    {
+      "name": "y",
+      "value": 0
+    },
+    {
+      "name": "result",
+      "value": 0
+    }
+  ],
+  "outputs": [],
+  "name": "add"
+}
