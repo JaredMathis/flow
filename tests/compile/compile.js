@@ -15,25 +15,28 @@ require('./defineAverage');
 
 function test(path) {
     u.scope(test.name, x => {
+        u.merge(x, ()=>library.length);
         let parsed = require(path);
 
-        let compiles = [];
-    
-        function compileDefinition(fn, fns) {
+        let compiles = [];    
+        u.loop(library, fn => {
             u.merge(x,{fn});
-            let lines = compile(fn, fns);
+            let lines = compile(fn, library);
             let compiled = lines.join(EOL);
             compiles.push(compiled);
-            return compiled;
-        }
-    
-        u.loop(library, l => compileDefinition(l, library));
+        });
+        u.merge(x, ()=>compiles.length);
 
         let text = compiles.join(EOL);
         eval(text);
 
         let actual;
-        eval(`actual = ${parsed.name}(${JSON.stringify(parsed.input)})`);
+        try {
+            eval(`actual = ${parsed.name}(${JSON.stringify(parsed.input)})`);
+        } catch (e) {
+            console.log(text);
+            throw e;
+        }
 
         u.assertIsEqualJson(() => actual, () => parsed.output);
     });
@@ -46,3 +49,4 @@ test("./add4.json");
 test("./add5.json");
 test("./add6.json");
 test("./add7.json");
+test("./divide.json");
