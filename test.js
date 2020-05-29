@@ -31,3 +31,4 @@ require("./tests/ifElse/ifElse.js");
 require("./tests/createTest/createTest.js");
 require("./tests/createFlow/createFlow.js");
 require("./tests/defineMultiply/defineMultiply.js");
+require("./tests/defineSubtract/defineSubtract.js");

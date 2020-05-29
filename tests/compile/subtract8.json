@@ -1,0 +1,10 @@
+{
+  "input": {
+    "x": 5,
+    "y": -5
+  },
+  "output": {
+    "result": 10
+  },
+  "name": "subtract"
+}
