@@ -32,3 +32,4 @@ module.exports.createTest = require("./library/createTest.js");
 module.exports.createFlow = require("./library/createFlow.js");
 module.exports.defineMultiply = require("./library/defineMultiply.js");
 module.exports.defineSubtract = require("./library/defineSubtract.js");
+module.exports.defineMod = require("./library/defineMod.js");

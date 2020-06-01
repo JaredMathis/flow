@@ -16,3 +16,4 @@ result.push(require("./defineSum")());
 result.push(require("./defineAverage")());
 result.push(require("./defineMultiply")());
 result.push(require("./defineSubtract")());
+result.push(require("./defineMod")());
