@@ -19,7 +19,7 @@ function defineGet() {
             [
                 variable('result', typeText()),
             ],
-            evaluate('result=getInMemory(location)')
+            evaluate('result=compileGetInMemory(location)')
         );
     });
     return result;

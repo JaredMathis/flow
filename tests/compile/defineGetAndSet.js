@@ -3,25 +3,23 @@ const u = require("wlj-utilities");
 const { EOL } = require('os');
 
 const compile = require("../../library/compile.js");
-const defineGet = require("../../library/defineGet.js");
-const defineSet = require("../../library/defineSet.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 const compileAssertHasOwnProperty = require("../../library/compileAssertHasOwnProperty.js");
-const library = require('../../library/getLibrary')();
+const compileGetInMemory = require("../../library/compileGetInMemory.js");
+const compileSetInMemory = require("../../library/compileSetInMemory.js");
+const compileAndTest = require('./compileAndTest');
 
 u.scope(__filename, x => {
-    let syntax = defineAdd();
-    let lines = compile(syntax, library);
-    let text = lines.join(EOL);
-    try {
+    compileAndTest(text => {
+        let log = false;
         eval(text);
 
-        // Should not be able to add a string
-        u.assert(() => u.throws(() => add({x:'a', y:2})['result'] === 3));
-        u.assert(() => u.throws(() => add({x:'a', y:'b'})['result'] === 3));
-        u.assert(() => u.throws(() => add({x:1, y:'b'})['result'] === 3));
-    } catch (e) {
-        console.log(text);
-        throw e;
-    }
+        if (log) console.log(text);
+
+        let location = 'myLocation'.split('');
+        let value = 'myValue'.split('');
+        eval(`set({location,value})`);
+        let actual;
+        eval(`actual = get({location})`);
+    });
 });

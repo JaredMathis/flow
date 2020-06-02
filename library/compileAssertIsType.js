@@ -8,6 +8,7 @@ function compileAssertIsType(value, type) {
     u.scope(compileAssertIsType.name, x => {
         u.merge(x,{value});
         u.merge(x,{type});
+        u.merge(x,() => type.$type);
 
         u.assert(() => u.isDefined(value));
         u.assert(() => u.isDefined(type));
@@ -18,7 +19,7 @@ function compileAssertIsType(value, type) {
             return;
         }
         
-        if (type.$type === 'char') {
+        if (type.$type === 'typeChar') {
             u.assert(() => u.isString(value));
             u.assert(() => value.length === 1);
             return;
@@ -27,6 +28,9 @@ function compileAssertIsType(value, type) {
         if (type.$type === 'typeList') {
             u.assert(() => u.isArray(value));
 
+            u.loop(value, element => {
+                compileAssertIsType(element, type.nested);
+            })
             return;
         }
         u.assert(() => false);

@@ -3,8 +3,6 @@ const u = require("wlj-utilities");
 const { EOL } = require('os');
 
 const compile = require("../../library/compile.js");
-const compileAssertIsType = require("../../library/compileAssertIsType.js");
-const compileAssertHasOwnProperty = require("../../library/compileAssertHasOwnProperty.js");
 const library = require('../../library/getLibrary')();
 
 module.exports = compileAndTest;

@@ -11,14 +11,14 @@ function defineSet() {
     let result;
     u.scope(defineSet.name, x => {
         result = defineFunction(
-            'get', 
+            'set', 
             [
                 variable('location', typeText()),
+                variable('value', typeText()),
             ],
             [
-                variable('result', typeText()),
             ],
-            evaluate('result=getInMemory(location)')
+            evaluate('compileSetInMemory(location,value)')
         );
     });
     return result;

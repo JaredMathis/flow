@@ -37,3 +37,7 @@ module.exports.defineSet = require("./library/defineSet.js");
 module.exports.defineGet = require("./library/defineGet.js");
 module.exports.typeText = require("./library/typeText.js");
 module.exports.typeChar = require("./library/typeChar.js");
+module.exports.compileGetInMemory = require("./library/compileGetInMemory.js");
+module.exports.defineDefineSet = require("./library/defineDefineSet.js");
+module.exports.compileSetInMemory = require("./library/compileSetInMemory.js");
+module.exports.compileGetInMemoryStorage = require("./library/compileGetInMemoryStorage.js");

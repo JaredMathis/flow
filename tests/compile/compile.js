@@ -13,6 +13,7 @@ require('./defineDivide');
 require('./defineSum');
 require('./defineCount');
 require('./defineAverage');
+require('./defineGetAndSet');
 
 function test(path) {
     u.scope(__filename, x => {
