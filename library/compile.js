@@ -1,6 +1,6 @@
 
 const u = require("wlj-utilities");
-const getRoots = require("./getRoots");
+const getStatements = require("./getStatements");
 
 module.exports = compile;
 
@@ -159,7 +159,7 @@ function processRoot(root, lines, indent, fns) {
         let typeKeys = Object.keys(types);
         u.merge(x, { typeKeys });
 
-        const roots = getRoots();
+        const roots = getStatements();
         u.merge(x, { roots });
 
         u.assert(() => u.isSetEqual(roots, typeKeys));

@@ -1,7 +1,7 @@
 
 const u = require("wlj-utilities");
 
-const getRoots = require("../../library/getRoots.js");
+const getStatements = require("../../library/getStatements.js");
 
 u.scope(__filename, x => {
     // TODO

@@ -20,7 +20,7 @@ require("./tests/set/set.js");
 require("./tests/newInt/newInt.js");
 require("./tests/loop/loop.js");
 require("./tests/execute/execute.js");
-require("./tests/getRoots/getRoots.js");
+require("./tests/getStatements/getStatements.js");
 require("./tests/compileAssertHasOwnProperty/compileAssertHasOwnProperty.js");
 require("./tests/defineCount/defineCount.js");
 require("./tests/defineAverage/defineAverage.js");

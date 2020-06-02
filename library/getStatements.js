@@ -1,14 +1,14 @@
 
 const u = require("wlj-utilities");
 
-module.exports = getRoots;
+module.exports = getStatements;
 
 /**
  * Returns the different root statements that need handling.
  */
-function getRoots() {
+function getStatements() {
     let result;
-    u.scope(getRoots.name, x => {
+    u.scope(getStatements.name, x => {
         result = [
             'block',
             'evaluate',
