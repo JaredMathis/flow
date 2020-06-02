@@ -20,8 +20,8 @@ function assertIsFunction(fn) {
         u.assert(() => u.isArray(fn.outputs));
         // TODO: assert each output
 
-        u.assert(() => u.isDefined(fn.root));
-        // TODO: do a more thorough assert on the root
+        u.assert(() => u.isDefined(fn.statement));
+        // TODO: do a more thorough assert on the statement
     });
     return result;
 }

@@ -6,7 +6,7 @@ const assertIsFunctionName = require("./assertIsFunctionName");
 
 module.exports = defineFunction;
 
-function defineFunction(name, inputs, outputs, root) {
+function defineFunction(name, inputs, outputs, statement) {
     let result;
     u.scope(defineFunction.name, x => {
         // TODO: Ensure multiple functions with the same
@@ -16,12 +16,12 @@ function defineFunction(name, inputs, outputs, root) {
         u.merge(x,{name});
         u.merge(x,{inputs});
         u.merge(x,{outputs});
-        u.merge(x,{root});
+        u.merge(x,{statement});
         
         assertIsFunctionName(name);
         u.assert(() => u.isArray(inputs));
         u.assert(() => u.isArray(outputs));
-        u.assert(() => u.isDefined(root));
+        u.assert(() => u.isDefined(statement));
 
         let inputNames = inputs.map(i => i.name);
         u.merge(x, {inputNames});
@@ -38,7 +38,7 @@ function defineFunction(name, inputs, outputs, root) {
             name,
             inputs,
             outputs,
-            root,
+            statement,
         };
 
         assertIsFunction(result);

@@ -54,7 +54,7 @@ function compile(f, fns) {
         });
 
         result.push(`${indent}// Root ${f.name}`);
-        processRoot(f.root, result, indent, fns);
+        processRoot(f.statement, result, indent, fns);
 
         result.push(`${indent}// Set output`);
         u.loop(f.outputs, o => {
@@ -72,13 +72,13 @@ function compile(f, fns) {
     return result;
 }
 
-function processRoot(root, lines, indent, fns) {
+function processRoot(statement, lines, indent, fns) {
     let result;
     u.scope(processRoot.name, x => {
-        u.merge(x, { root });
+        u.merge(x, { statement });
         //u.merge(x, { lines, indent, fns});
 
-        u.assert(() => u.isDefined(root));
+        u.assert(() => u.isDefined(statement));
         u.assertIsStringArray(lines);
         u.assert(() => u.isString(indent));
         u.assert(() => u.isArray(fns));
@@ -90,43 +90,43 @@ function processRoot(root, lines, indent, fns) {
             block: () => {
                 lines.push(`${indent}// Block`);
                 lines.push(`${indent}(function () {`);
-                u.loop(root.variables, v => {
+                u.loop(statement.variables, v => {
                     u.assert(() => u.isString(v.name));
                     u.assert(() => !fnsNames.includes(v.name));
 
                     // Variables can be assigned to; needs to be let not const
                     lines.push(`${indent}${tab}let ${v.name} = null;`);
                 });
-                processRoot(root.root, lines, indent + tab, fns);
+                processRoot(statement.statement, lines, indent + tab, fns);
                 lines.push(`${indent}})();`);
             },
-            evaluate: () => lines.push(`${indent}eval("${root.expression}")`),
+            evaluate: () => lines.push(`${indent}eval("${statement.expression}")`),
             execute: () => {
-                u.merge(x, () => root.inputs);
-                u.merge(x, () => root.outputs);
-                let definition = u.arraySingle(fns, { name: root.name });
+                u.merge(x, () => statement.inputs);
+                u.merge(x, () => statement.outputs);
+                let definition = u.arraySingle(fns, { name: statement.name });
 
-                lines.push(`${indent}// Execute ${root.name}`);
+                lines.push(`${indent}// Execute ${statement.name}`);
                 lines.push(`${indent}(function () {`);
                 lines.push(`${indent}${tab}const executeInputs = {};`);
                 u.loop(definition.inputs, input => {
                     let inputName = input.name;
                     u.merge(x, { inputName });
                     u.assert(() => !fnsNames.includes(inputName));
-                    let mappedInput = root.inputs[inputName];
+                    let mappedInput = statement.inputs[inputName];
                     u.merge(x, { mappedInput });
                     u.assert(() => u.isString(mappedInput));
                     lines.push(`${indent}${tab}executeInputs["${input.name}"] = ${mappedInput};`);
                 });
-                lines.push(`${indent}${tab}const executeOutputs = ${root.name}(executeInputs);`);
+                lines.push(`${indent}${tab}const executeOutputs = ${statement.name}(executeInputs);`);
                 let outputNames = definition.outputs.map(o => o.name);
                 u.merge(x, { outputNames });
-                u.assert(() => u.isSetEqual(outputNames, Object.keys(root.outputs)));
+                u.assert(() => u.isSetEqual(outputNames, Object.keys(statement.outputs)));
                 u.loop(definition.outputs, output => {
                     let outputName = output.name;
                     u.merge(x, { outputName });
                     u.assert(() => !fnsNames.includes(outputName));
-                    let mappedOutput = root.outputs[outputName];
+                    let mappedOutput = statement.outputs[outputName];
                     u.merge(x, { mappedOutput });
                     u.assert(() => u.isString(mappedOutput));
                     lines.push(`${indent}${tab}${mappedOutput} = executeOutputs["${output.name}"];`);
@@ -134,22 +134,22 @@ function processRoot(root, lines, indent, fns) {
                 lines.push(`${indent}})();`);
             },
             loop: () => {
-                lines.push(`${indent}let ${root.index} = 0;`);
-                lines.push(`${indent}for (const ${root.element} of ${root.array}) {`);
-                processRoot(root.root, lines, indent + tab, fns);
+                lines.push(`${indent}let ${statement.index} = 0;`);
+                lines.push(`${indent}for (const ${statement.element} of ${statement.array}) {`);
+                processRoot(statement.statement, lines, indent + tab, fns);
 
-                lines.push(`${indent + tab}${root.index}++;`);
+                lines.push(`${indent + tab}${statement.index}++;`);
                 lines.push(`${indent}}`)
             },
             set: () => {
-                u.assert(() => u.isDefined(root.right));
-                u.assert(() => root.right.$type === 'newInt');
-                let right = root.right.value;
-                lines.push(`${indent}${root.left} = ${right};`);
+                u.assert(() => u.isDefined(statement.right));
+                u.assert(() => statement.right.$type === 'newInt');
+                let right = statement.right.value;
+                lines.push(`${indent}${statement.left} = ${right};`);
             },
             steps: () => {
                 lines.push(`${indent}// Steps`);
-                u.loop(root.steps, step => {
+                u.loop(statement.steps, step => {
                     u.merge(x, { step })
                     processRoot(step, lines, indent + tab, fns);
                 });
@@ -159,15 +159,15 @@ function processRoot(root, lines, indent, fns) {
         let typeKeys = Object.keys(types);
         u.merge(x, { typeKeys });
 
-        const roots = getStatements();
-        u.merge(x, { roots });
+        const statements = getStatements();
+        u.merge(x, { statements });
 
-        u.assert(() => u.isSetEqual(roots, typeKeys));
+        u.assert(() => u.isSetEqual(statements, typeKeys));
 
-        u.merge(x, () => root.$type);
-        u.assert(() => roots.includes(root.$type));
+        u.merge(x, () => statement.$type);
+        u.assert(() => statements.includes(statement.$type));
 
-        types[root.$type]();
+        types[statement.$type]();
     });
     return result;
 }
