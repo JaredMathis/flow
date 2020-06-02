@@ -33,3 +33,7 @@ module.exports.createFlow = require("./library/createFlow.js");
 module.exports.defineMultiply = require("./library/defineMultiply.js");
 module.exports.defineSubtract = require("./library/defineSubtract.js");
 module.exports.defineMod = require("./library/defineMod.js");
+module.exports.defineSet = require("./library/defineSet.js");
+module.exports.defineGet = require("./library/defineGet.js");
+module.exports.typeText = require("./library/typeText.js");
+module.exports.typeChar = require("./library/typeChar.js");

@@ -6,6 +6,7 @@ const compile = require("../../library/compile.js");
 const compileAssertIsType = require("../../library/compileAssertIsType.js");
 const compileAssertHasOwnProperty = require("../../library/compileAssertHasOwnProperty.js");
 const library = require('../../library/getLibrary')();
+const compileAndTest = require('./compileAndTest');
 
 require('./defineAdd');
 require('./defineDivide');
@@ -14,31 +15,24 @@ require('./defineCount');
 require('./defineAverage');
 
 function test(path) {
-    u.scope(test.name, x => {
-        u.merge(x, ()=>library.length);
-        let parsed = require(path);
+    u.scope(__filename, x => {
+        u.scope(test.name, x => {
+            compileAndTest((text) => {
+                eval(text);
 
-        let compiles = [];    
-        u.loop(library, fn => {
-            u.merge(x,{fn});
-            let lines = compile(fn, library);
-            let compiled = lines.join(EOL);
-            compiles.push(compiled);
+                let parsed = require(path);
+                u.merge(x, () => parsed.name);
+                let actual;
+                try {
+                    eval(`actual = ${parsed.name}(${JSON.stringify(parsed.input)})`);
+                } catch (e) {
+                    console.log(text);
+                    throw e;
+                }
+
+                u.assertIsEqualJson(() => actual, () => parsed.output);
+            });
         });
-        u.merge(x, ()=>compiles.length);
-
-        let text = compiles.join(EOL);
-        eval(text);
-
-        let actual;
-        try {
-            eval(`actual = ${parsed.name}(${JSON.stringify(parsed.input)})`);
-        } catch (e) {
-            console.log(text);
-            throw e;
-        }
-
-        u.assertIsEqualJson(() => actual, () => parsed.output);
     });
 }
 

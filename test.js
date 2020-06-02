@@ -33,3 +33,7 @@ require("./tests/createFlow/createFlow.js");
 require("./tests/defineMultiply/defineMultiply.js");
 require("./tests/defineSubtract/defineSubtract.js");
 require("./tests/defineMod/defineMod.js");
+require("./tests/defineSet/defineSet.js");
+require("./tests/defineGet/defineGet.js");
+require("./tests/typeText/typeText.js");
+require("./tests/typeChar/typeChar.js");

@@ -9,14 +9,21 @@ const tab = '  ';
 function compile(f, fns) {
     let result;
     u.scope(compile.name, x => {
-        u.merge(x,{f,fns});
+        u.merge(x, { f, fns });
+        let previousName;
+        u.loop(fns, fn => {
+            u.merge(x, { previousName });
+            u.assert(() => u.isDefined(fn));
+            previousName = fn.name;
+        });
+        delete x.previousName;
 
         u.assert(() => u.isDefined(f));
-        u.merge(x,() => f.name);
+        u.merge(x, () => f.name);
         delete x.f;
         u.assert(() => f.$type === 'defineFunction');
         u.assert(() => u.isArray(fns));
-        u.merge(x,() => fns.map(f => f.name));
+        u.merge(x, () => fns.map(f => f.name));
         delete x.fns;
 
         let indent = tab;
@@ -48,7 +55,7 @@ function compile(f, fns) {
 
         result.push(`${indent}// Root ${f.name}`);
         processRoot(f.root, result, indent, fns);
-        
+
         result.push(`${indent}// Set output`);
         u.loop(f.outputs, o => {
             result.push(`${indent}outputs["${o.name}"] = ${o.name};`);
@@ -68,7 +75,8 @@ function compile(f, fns) {
 function processRoot(root, lines, indent, fns) {
     let result;
     u.scope(processRoot.name, x => {
-        //u.merge(x, {root, lines, indent, fns});
+        u.merge(x, { root });
+        //u.merge(x, { lines, indent, fns});
 
         u.assert(() => u.isDefined(root));
         u.assertIsStringArray(lines);
@@ -76,7 +84,7 @@ function processRoot(root, lines, indent, fns) {
         u.assert(() => u.isArray(fns));
 
         let fnsNames = fns.map(f => f.name);
-        u.merge(x,{fnsNames});
+        u.merge(x, { fnsNames });
 
         let types = {
             block: () => {
@@ -94,8 +102,8 @@ function processRoot(root, lines, indent, fns) {
             },
             evaluate: () => lines.push(`${indent}eval("${root.expression}")`),
             execute: () => {
-                u.merge(x, ()=>root.inputs);
-                u.merge(x, ()=>root.outputs);
+                u.merge(x, () => root.inputs);
+                u.merge(x, () => root.outputs);
                 let definition = u.arraySingle(fns, { name: root.name });
 
                 lines.push(`${indent}// Execute ${root.name}`);
@@ -103,23 +111,23 @@ function processRoot(root, lines, indent, fns) {
                 lines.push(`${indent}${tab}const executeInputs = {};`);
                 u.loop(definition.inputs, input => {
                     let inputName = input.name;
-                    u.merge(x, {inputName});
+                    u.merge(x, { inputName });
                     u.assert(() => !fnsNames.includes(inputName));
                     let mappedInput = root.inputs[inputName];
-                    u.merge(x, {mappedInput});
+                    u.merge(x, { mappedInput });
                     u.assert(() => u.isString(mappedInput));
                     lines.push(`${indent}${tab}executeInputs["${input.name}"] = ${mappedInput};`);
                 });
                 lines.push(`${indent}${tab}const executeOutputs = ${root.name}(executeInputs);`);
                 let outputNames = definition.outputs.map(o => o.name);
-                u.merge(x,{outputNames});
+                u.merge(x, { outputNames });
                 u.assert(() => u.isSetEqual(outputNames, Object.keys(root.outputs)));
                 u.loop(definition.outputs, output => {
                     let outputName = output.name;
-                    u.merge(x, {outputName});
+                    u.merge(x, { outputName });
                     u.assert(() => !fnsNames.includes(outputName));
                     let mappedOutput = root.outputs[outputName];
-                    u.merge(x, {mappedOutput});
+                    u.merge(x, { mappedOutput });
                     u.assert(() => u.isString(mappedOutput));
                     lines.push(`${indent}${tab}${mappedOutput} = executeOutputs["${output.name}"];`);
                 });
@@ -129,8 +137,8 @@ function processRoot(root, lines, indent, fns) {
                 lines.push(`${indent}let ${root.index} = 0;`);
                 lines.push(`${indent}for (const ${root.element} of ${root.array}) {`);
                 processRoot(root.root, lines, indent + tab, fns);
-                
-                lines.push(`${indent+tab}${root.index}++;`);
+
+                lines.push(`${indent + tab}${root.index}++;`);
                 lines.push(`${indent}}`)
             },
             set: () => {
@@ -140,28 +148,26 @@ function processRoot(root, lines, indent, fns) {
                 lines.push(`${indent}${root.left} = ${right};`);
             },
             steps: () => {
-                lines.push(`${indent}// Steps`);                
+                lines.push(`${indent}// Steps`);
                 u.loop(root.steps, step => {
-                    u.merge(x, {step})
+                    u.merge(x, { step })
                     processRoot(step, lines, indent + tab, fns);
                 });
             },
         };
 
         let typeKeys = Object.keys(types);
-        u.merge(x, {typeKeys});
+        u.merge(x, { typeKeys });
 
         const roots = getRoots();
-        u.merge(x, {roots});
-        
+        u.merge(x, { roots });
+
         u.assert(() => u.isSetEqual(roots, typeKeys));
 
-        let rootType = root.$type;
-        u.merge(x, {rootType});
+        u.merge(x, () => root.$type);
+        u.assert(() => roots.includes(root.$type));
 
-        u.assert(() => roots.includes(rootType));
-
-        types[rootType]();
+        types[root.$type]();
     });
     return result;
 }
