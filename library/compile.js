@@ -53,8 +53,8 @@ function compile(f, fns) {
             result.push(`${indent}let ${o.name} = null;`);
         });
 
-        result.push(`${indent}// Root ${f.name}`);
-        processRoot(f.statement, result, indent, fns);
+        result.push(`${indent}// Root statement ${f.name}`);
+        processStatement(f.statement, result, indent, fns);
 
         result.push(`${indent}// Set output`);
         u.loop(f.outputs, o => {
@@ -72,9 +72,9 @@ function compile(f, fns) {
     return result;
 }
 
-function processRoot(statement, lines, indent, fns) {
+function processStatement(statement, lines, indent, fns) {
     let result;
-    u.scope(processRoot.name, x => {
+    u.scope(processStatement.name, x => {
         u.merge(x, { statement });
         //u.merge(x, { lines, indent, fns});
 
@@ -97,7 +97,7 @@ function processRoot(statement, lines, indent, fns) {
                     // Variables can be assigned to; needs to be let not const
                     lines.push(`${indent}${tab}let ${v.name} = null;`);
                 });
-                processRoot(statement.statement, lines, indent + tab, fns);
+                processStatement(statement.statement, lines, indent + tab, fns);
                 lines.push(`${indent}})();`);
             },
             evaluate: () => lines.push(`${indent}eval("${statement.expression}")`),
@@ -136,7 +136,7 @@ function processRoot(statement, lines, indent, fns) {
             loop: () => {
                 lines.push(`${indent}let ${statement.index} = 0;`);
                 lines.push(`${indent}for (const ${statement.element} of ${statement.array}) {`);
-                processRoot(statement.statement, lines, indent + tab, fns);
+                processStatement(statement.statement, lines, indent + tab, fns);
 
                 lines.push(`${indent + tab}${statement.index}++;`);
                 lines.push(`${indent}}`)
@@ -151,7 +151,7 @@ function processRoot(statement, lines, indent, fns) {
                 lines.push(`${indent}// Steps`);
                 u.loop(statement.steps, step => {
                     u.merge(x, { step })
-                    processRoot(step, lines, indent + tab, fns);
+                    processStatement(step, lines, indent + tab, fns);
                 });
             },
         };
