@@ -41,3 +41,4 @@ module.exports.typeChar = require("./library/typeChar.js");
 module.exports.compileGetInMemory = require("./library/compileGetInMemory.js");
 module.exports.compileSetInMemory = require("./library/compileSetInMemory.js");
 module.exports.compileGetInMemoryStorage = require("./library/compileGetInMemoryStorage.js");
+module.exports.getAvailableVariables = require("./library/getAvailableVariables.js");
