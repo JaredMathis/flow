@@ -28,7 +28,8 @@ module.exports.block = require("./library/block.js");
 module.exports.getLibrary = require("./library/getLibrary.js");
 module.exports.defineDivide = require("./library/defineDivide.js");
 module.exports.ifElse = require("./library/ifElse.js");
-module.exports.createTest = require("./library/createTest.js");
+// This is not supported by browserify because of the readline-sync
+// module.exports.createTest = require("./library/createTest.js");
 module.exports.createFlow = require("./library/createFlow.js");
 module.exports.defineMultiply = require("./library/defineMultiply.js");
 module.exports.defineSubtract = require("./library/defineSubtract.js");
@@ -38,6 +39,5 @@ module.exports.defineGet = require("./library/defineGet.js");
 module.exports.typeText = require("./library/typeText.js");
 module.exports.typeChar = require("./library/typeChar.js");
 module.exports.compileGetInMemory = require("./library/compileGetInMemory.js");
-module.exports.defineDefineSet = require("./library/defineDefineSet.js");
 module.exports.compileSetInMemory = require("./library/compileSetInMemory.js");
 module.exports.compileGetInMemoryStorage = require("./library/compileGetInMemoryStorage.js");

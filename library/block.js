@@ -7,7 +7,6 @@ function block(variables, statement) {
     let result;
     u.scope(block.name, x => {
         u.assert(() => u.isArray(variables));
-        u.assert(() => variables.length >= 1);
         u.assert(() => u.isDefined(statement));
 
         result = {
