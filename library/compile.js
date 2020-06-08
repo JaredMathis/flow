@@ -1,67 +1,68 @@
 
 const u = require("wlj-utilities");
 const getStatements = require("./getStatements");
+const getAvailableVariables = require('./getAvailableVariables');
 
 module.exports = compile;
 
 const tab = '  ';
 
-function compile(f, fns) {
+function compile(flow, flows) {
     let result;
     u.scope(compile.name, x => {
-        u.merge(x, { f, fns });
+        u.merge(x, { flow, flows });
         let previousName;
-        u.loop(fns, fn => {
+        u.loop(flows, f => {
             u.merge(x, { previousName });
-            u.assert(() => u.isDefined(fn));
-            previousName = fn.name;
+            u.assert(() => u.isDefined(f));
+            previousName = f.name;
         });
         delete x.previousName;
 
-        u.assert(() => u.isDefined(f));
-        u.merge(x, () => f.name);
+        u.assert(() => u.isDefined(flow));
+        u.merge(x, () => flow.name);
         delete x.f;
-        u.assert(() => f.$type === 'defineFunction');
-        u.assert(() => u.isArray(fns));
-        u.merge(x, () => fns.map(f => f.name));
-        delete x.fns;
+        u.assert(() => flow.$type === 'defineFunction');
+        u.assert(() => u.isArray(flows));
+        u.merge(x, () => flows.map(f => f.name));
+        delete x.flows;
 
         let indent = tab;
 
         result = [];
 
-        result.push(`function ${f.name}(inputs) {`);
+        result.push(`function ${flow.name}(inputs) {`);
         result.push(`${indent}// Initialize output`);
         result.push(`${indent}const outputs = {};`);
-        result.push(`${indent}u.scope(${f.name}.name, $context => {`);
+        result.push(`${indent}u.scope(${flow.name}.name, $context => {`);
         result.push(`${indent}u.merge($context, {inputs});`);
 
         result.push(`${indent}// Validate input properties`);
-        u.loop(f.inputs, i => {
+        u.loop(flow.inputs, i => {
             result.push(`${indent}compileAssertHasOwnProperty(inputs, "${i.name}");`);
         });
         result.push(`${indent}// Set input variables`);
-        u.loop(f.inputs, i => {
+        u.loop(flow.inputs, i => {
             result.push(`${indent}const ${i.name} = inputs["${i.name}"];`);
         });
         result.push(`${indent}// Validate input types`);
-        u.loop(f.inputs, i => {
+        u.loop(flow.inputs, i => {
             result.push(`${indent}compileAssertIsType(${i.name}, ${JSON.stringify(i.type)});`);
         });
         result.push(`${indent}// Initialize outputs`);
-        u.loop(f.outputs, o => {
+        u.loop(flow.outputs, o => {
             result.push(`${indent}let ${o.name} = null;`);
         });
 
-        result.push(`${indent}// Root statement ${f.name}`);
-        processStatement(f.statement, result, indent, fns);
+        result.push(`${indent}// Root statement ${flow.name}`);
+        processStatement(flow.statement, result, indent, flow, flows);
 
         result.push(`${indent}// Set output`);
-        u.loop(f.outputs, o => {
+        u.loop(flow.outputs, o => {
             result.push(`${indent}outputs["${o.name}"] = ${o.name};`);
         });
         result.push(`${indent}u.merge($context, {outputs});`);
-        u.loop(f.outputs, o => {
+        u.loop(flow.outputs, o => {
             result.push(`${indent}compileAssertIsType(${o.name}, ${JSON.stringify(o.type)});`);
         });
 
@@ -72,7 +73,7 @@ function compile(f, fns) {
     return result;
 }
 
-function processStatement(statement, lines, indent, fns) {
+function processStatement(statement, lines, indent, flow, flows) {
     let result;
     u.scope(processStatement.name, x => {
         u.merge(x, { statement });
@@ -81,9 +82,9 @@ function processStatement(statement, lines, indent, fns) {
         u.assert(() => u.isDefined(statement));
         u.assertIsStringArray(lines);
         u.assert(() => u.isString(indent));
-        u.assert(() => u.isArray(fns));
+        u.assert(() => u.isArray(flows));
 
-        let fnsNames = fns.map(f => f.name);
+        let fnsNames = flows.map(f => f.name);
         u.merge(x, { fnsNames });
 
         let types = {
@@ -91,7 +92,7 @@ function processStatement(statement, lines, indent, fns) {
             execute: () => {
                 u.merge(x, () => statement.inputs);
                 u.merge(x, () => statement.outputs);
-                let definition = u.arraySingle(fns, { name: statement.name });
+                let definition = u.arraySingle(flows, { name: statement.name });
 
                 lines.push(`${indent}// Execute ${statement.name}`);
                 lines.push(`${indent}(function () {`);
@@ -123,7 +124,7 @@ function processStatement(statement, lines, indent, fns) {
             loop: () => {
                 lines.push(`${indent}let ${statement.index} = 0;`);
                 lines.push(`${indent}for (const ${statement.element} of ${statement.array}) {`);
-                processStatement(statement.statement, lines, indent + tab, fns);
+                processStatement(statement.statement, lines, indent + tab, flow, flows);
 
                 lines.push(`${indent + tab}${statement.index}++;`);
                 lines.push(`${indent}}`)
@@ -132,13 +133,16 @@ function processStatement(statement, lines, indent, fns) {
                 u.assert(() => u.isDefined(statement.right));
                 u.assert(() => statement.right.$type === 'newInt');
                 let right = statement.right.value;
+                u.merge(x,() => getAvailableVariables(flow).map(v => v.name));
+                u.merge(x,() => statement.left);
+                u.assert(() => getAvailableVariables(flow).map(v => v.name).includes(statement.left));
                 lines.push(`${indent}${statement.left} = ${right};`);
             },
             steps: () => {
                 lines.push(`${indent}// Steps`);
                 u.loop(statement.steps, step => {
                     u.merge(x, { step })
-                    processStatement(step, lines, indent + tab, fns);
+                    processStatement(step, lines, indent + tab, flow, flows);
                 });
             },
         };

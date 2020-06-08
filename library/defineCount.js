@@ -24,7 +24,9 @@ function defineCount() {
             [
                 variable('result', typeInt()),
             ],
-            [],
+            [
+                variable('one', typeInt()),
+            ],
             steps([
                 set('result', newInt('0')),
                 set('one', newInt('1')),
