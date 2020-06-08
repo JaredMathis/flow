@@ -20,6 +20,7 @@ function defineMultiply() {
             [
                 variable('result', typeInt()),
             ],
+            [],
             evaluate('result=x*y')
         );
     });

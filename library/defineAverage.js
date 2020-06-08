@@ -10,7 +10,6 @@ const set = require("./set");
 const newInt = require("./newInt");
 const loop = require("./loop");
 const execute = require("./execute");
-const block = require("./block");
 
 module.exports = defineAverage;
 
@@ -25,26 +24,24 @@ function defineAverage() {
             [
                 variable('result', typeInt()),
             ],
-            block(
-                [
-                    variable('s', typeInt()),
-                    variable('c', typeInt()),
-                ],
-                steps([
-                    execute('sum', 
-                        {'array':'array'},
-                        {'result':'s'}
-                    ),
-                    execute('count', 
-                        {'array':'array'},
-                        {'result':'c'}
-                    ),
-                    execute('divide', 
-                        {'x':'s','y':'c'},
-                        {'result':'result'}
-                    ),
-                ]),
-            ),
+            [
+                variable('s', typeInt()),
+                variable('c', typeInt()),
+            ],
+            steps([
+                execute('sum', 
+                    {'array':'array'},
+                    {'result':'s'}
+                ),
+                execute('count', 
+                    {'array':'array'},
+                    {'result':'c'}
+                ),
+                execute('divide', 
+                    {'x':'s','y':'c'},
+                    {'result':'result'}
+                ),
+            ]),
         );
     });
     return result;

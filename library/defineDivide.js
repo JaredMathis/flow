@@ -20,6 +20,7 @@ function defineDivide() {
             [
                 variable('result', typeInt()),
             ],
+            [],
             evaluate('result=Math.floor(x/y);')
         );
     });

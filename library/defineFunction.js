@@ -1,13 +1,14 @@
 
 const u = require("wlj-utilities");
 
-const assertIsFunction = require("./assertIsFunction");
-const assertIsFunctionName = require("./assertIsFunctionName");
+const assertIsFlow = require("./assertIsFlow");
+const assertIsFunctionName = require("./assertIsFlowName");
 
 module.exports = defineFunction;
 
-function defineFunction(name, inputs, outputs, statement) {
+function defineFunction(name, inputs, outputs, variables, statement) {
     let result;
+    let args = arguments;
     u.scope(defineFunction.name, x => {
         // TODO: Ensure multiple functions with the same
         // name are not defined. 
@@ -17,10 +18,13 @@ function defineFunction(name, inputs, outputs, statement) {
         u.merge(x,{inputs});
         u.merge(x,{outputs});
         u.merge(x,{statement});
+
+        u.assert(() => args.length === 5);
         
         assertIsFunctionName(name);
         u.assert(() => u.isArray(inputs));
         u.assert(() => u.isArray(outputs));
+        u.assert(() => u.isArray(variables));
         u.assert(() => u.isDefined(statement));
 
         let inputNames = inputs.map(i => i.name);
@@ -38,10 +42,11 @@ function defineFunction(name, inputs, outputs, statement) {
             name,
             inputs,
             outputs,
+            variables,
             statement,
         };
 
-        assertIsFunction(result);
+        assertIsFlow(result);
     });
     return result;
 }

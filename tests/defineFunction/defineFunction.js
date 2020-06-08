@@ -31,4 +31,29 @@ u.scope(__filename, x => {
     ], [
 
     ], evaluate(";")));
+
+    // Missing argument
+    u.assertThrows(() => result = defineFunction(
+        'average', 
+        [
+            variable('array', typeList(typeInt())),
+        ],
+        [
+            variable('result', typeInt()),
+        ],
+        steps([
+            execute('sum', 
+                {'array':'array'},
+                {'result':'s'}
+            ),
+            execute('count', 
+                {'array':'array'},
+                {'result':'c'}
+            ),
+            execute('divide', 
+                {'x':'s','y':'c'},
+                {'result':'result'}
+            ),
+        ]),
+    ));
 });

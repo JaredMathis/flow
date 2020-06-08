@@ -20,6 +20,7 @@ function defineMod() {
             [
                 variable('result', typeInt()),
             ],
+            [],
             evaluate('result=x%y;')
         );
     });

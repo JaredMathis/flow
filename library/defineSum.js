@@ -23,6 +23,7 @@ function defineSum() {
             [
                 variable('result', typeInt()),
             ],
+            [],
             steps([
                 set('result', newInt('0')),
                 loop('array', 'a', 'index',

@@ -1,7 +1,7 @@
 
 const u = require("wlj-utilities");
 
-const assertIsFunctionName = require("./assertIsFunctionName");
+const assertIsFlowName = require("./assertIsFlowName");
 
 module.exports = assertIsFunction;
 
@@ -12,7 +12,7 @@ function assertIsFunction(fn) {
 
         u.assert(() => u.isDefined(fn));
 
-        assertIsFunctionName(fn.name);
+        assertIsFlowName(fn.name);
         
         u.assert(() => u.isArray(fn.inputs));
         // TODO: assert each input

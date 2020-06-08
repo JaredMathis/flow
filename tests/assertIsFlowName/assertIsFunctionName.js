@@ -1,7 +1,7 @@
 
 const u = require("wlj-utilities");
 
-const assertIsFunction = require("../../library/assertIsFunction.js");
+const assertIsFlowName = require("../../library/assertIsFlowName.js");
 
 u.scope(__filename, x => {
 

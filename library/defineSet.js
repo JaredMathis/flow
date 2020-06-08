@@ -18,6 +18,7 @@ function defineSet() {
             ],
             [
             ],
+            [],
             evaluate('compileSetInMemory(location,value)')
         );
     });

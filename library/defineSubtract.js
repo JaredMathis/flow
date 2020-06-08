@@ -20,6 +20,7 @@ function defineSubtract() {
             [
                 variable('result', typeInt()),
             ],
+            [],
             evaluate('result=x-y')
         );
     });

@@ -87,19 +87,6 @@ function processStatement(statement, lines, indent, fns) {
         u.merge(x, { fnsNames });
 
         let types = {
-            block: () => {
-                lines.push(`${indent}// Block`);
-                lines.push(`${indent}(function () {`);
-                u.loop(statement.variables, v => {
-                    u.assert(() => u.isString(v.name));
-                    u.assert(() => !fnsNames.includes(v.name));
-
-                    // Variables can be assigned to; needs to be let not const
-                    lines.push(`${indent}${tab}let ${v.name} = null;`);
-                });
-                processStatement(statement.statement, lines, indent + tab, fns);
-                lines.push(`${indent}})();`);
-            },
             evaluate: () => lines.push(`${indent}eval("${statement.expression}")`),
             execute: () => {
                 u.merge(x, () => statement.inputs);

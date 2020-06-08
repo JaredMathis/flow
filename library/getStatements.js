@@ -10,7 +10,6 @@ function getStatements() {
     let result;
     u.scope(getStatements.name, x => {
         result = [
-            'block',
             'evaluate',
             'execute',
             'loop',
