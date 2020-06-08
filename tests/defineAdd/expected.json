@@ -4,21 +4,28 @@
   "inputs": [
     {
       "name": "x",
-      "type": "int"
+      "type": {
+        "$type": "typeInt"
+      }
     },
     {
       "name": "y",
-      "type": "int"
+      "type": {
+        "$type": "typeInt"
+      }
     }
   ],
   "outputs": [
     {
-      "name": "sum",
-      "type": "int"
+      "name": "result",
+      "type": {
+        "$type": "typeInt"
+      }
     }
   ],
+  "variables": [],
   "statement": {
     "$type": "evaluate",
-    "expression": "sum=x+y"
+    "expression": "result=x+y"
   }
 }

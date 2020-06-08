@@ -4,13 +4,15 @@ const u = require("wlj-utilities");
 const defineAdd = require("../../library/defineAdd.js");
 
 u.scope(__filename, x => {
-    // TODO
+    let log = false;
 
-    // let log = false;
-
-    // let add = defineAdd();
-    // if (log) console.log(JSON.stringify(add, null, 2));
+    let add = defineAdd();
     
-    // let expected = require('./expected');
-    // u.assertIsEqualJson(() => add, () => expected);
+    let expected = require('./expected');
+    try {
+        u.assertIsEqualJson(() => add, () => expected);
+    } catch (e) {
+        console.log(JSON.stringify(add, null, 2));
+        throw e;
+    }
 });
