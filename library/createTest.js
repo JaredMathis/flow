@@ -57,7 +57,7 @@ function createTest(remaining) {
 
         let testsFile = path.join(directory, 'getTests.js');
         fs.appendFileSync(testsFile, EOL);
-        fs.appendFileSync(testsFile, `test("./${path.basename(testFile)}");`);
+        fs.appendFileSync(testsFile, `test(require("./${path.basename(testFile)}"));`);
 
         require('./../test');
     });
