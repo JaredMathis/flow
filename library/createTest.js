@@ -55,7 +55,7 @@ function createTest(remaining) {
         let json = JSON.stringify(test, null, 2);
         fs.writeFileSync(testFile, json);
 
-        let testsFile = path.join(directory, 'compile.js');
+        let testsFile = path.join(directory, 'getTests.js');
         fs.appendFileSync(testsFile, EOL);
         fs.appendFileSync(testsFile, `test("./${path.basename(testFile)}");`);
 
