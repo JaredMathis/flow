@@ -18,7 +18,7 @@ function defineSum() {
         result = defineFunction(
             'sum', 
             [
-                variable('array', typeList(typeInt())),
+                variable('list', typeList(typeInt())),
             ],
             [
                 variable('result', typeInt()),
@@ -26,7 +26,7 @@ function defineSum() {
             [],
             steps([
                 set('result', newInt('0')),
-                loop('array', 'a', 'index',
+                loop('list', 'a', 'index',
                     execute('add', 
                         {'x':'result', 'y':'a'},
                         {'result':'result'}),

@@ -1,69 +1,69 @@
 {
-    "$type": "defineFunction",
-    "name": "count",
-    "inputs": [
-      {
-        "name": "array",
-        "type": {
-          "$type": "typeList",
-          "nested": {
-            "$type": "typeInt"
-          }
-        }
-      }
-    ],
-    "outputs": [
-      {
-        "name": "result",
-        "type": {
+  "$type": "defineFunction",
+  "name": "count",
+  "inputs": [
+    {
+      "name": "list",
+      "type": {
+        "$type": "typeList",
+        "nested": {
           "$type": "typeInt"
         }
       }
-    ],
-    "variables": [
-      {
-        "name": "one",
-        "type": {
-          "$type": "typeInt"
-        }
-      }
-    ],
-    "statement": {
-      "$type": "steps",
-      "steps": [
-        {
-          "$type": "set",
-          "left": "result",
-          "right": {
-            "$type": "newInt",
-            "value": 0
-          }
-        },
-        {
-          "$type": "set",
-          "left": "one",
-          "right": {
-            "$type": "newInt",
-            "value": 1
-          }
-        },
-        {
-          "$type": "loop",
-          "array": "array",
-          "element": "a",
-          "index": "index",
-          "statement": {
-            "$type": "execute",
-            "name": "add",
-            "inputs": {
-              "x": "result",
-              "y": "one"
-            },
-            "outputs": {
-              "result": "result"
-            }
-          }
-        }
-      ]
     }
+  ],
+  "outputs": [
+    {
+      "name": "result",
+      "type": {
+        "$type": "typeInt"
+      }
+    }
+  ],
+  "variables": [
+    {
+      "name": "one",
+      "type": {
+        "$type": "typeInt"
+      }
+    }
+  ],
+  "statement": {
+    "$type": "steps",
+    "steps": [
+      {
+        "$type": "set",
+        "left": "result",
+        "right": {
+          "$type": "newInt",
+          "value": 0
+        }
+      },
+      {
+        "$type": "set",
+        "left": "one",
+        "right": {
+          "$type": "newInt",
+          "value": 1
+        }
+      },
+      {
+        "$type": "loop",
+        "array": "list",
+        "element": "a",
+        "index": "index",
+        "statement": {
+          "$type": "execute",
+          "name": "add",
+          "inputs": {
+            "x": "result",
+            "y": "one"
+          },
+          "outputs": {
+            "result": "result"
+          }
+        }
+      }
+    ]
   }
+}

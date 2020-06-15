@@ -18,7 +18,7 @@ u.scope(__filename, x => {
     actual = getAvailableVariables(defineAverage());
     if (log) console.log(actual);
     u.assertIsEqualJson(() => actual, () => [
-        { name: 'array', type: { '$type': 'typeList', nested: { '$type': 'typeInt' } } },
+        { name: 'list', type: { '$type': 'typeList', nested: { '$type': 'typeInt' } } },
         { name: 'result', type: { '$type': 'typeInt' } },
         { name: 's', type: { '$type': 'typeInt' } },
         { name: 'c', type: { '$type': 'typeInt' } }

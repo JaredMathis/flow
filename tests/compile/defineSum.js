@@ -33,18 +33,18 @@ u.scope(__filename, x => {
         // For some reason, sum needs to be re-defined
         // hence eval-ing... before the calls.
         eval(getEval());
-        u.assert(() => sum({array:[]})['result'] === 0);
-        u.assert(() => sum({array:[1]})['result'] === 1);
+        u.assert(() => sum({list:[]})['result'] === 0);
+        u.assert(() => sum({list:[1]})['result'] === 1);
         eval(getEval());
-        u.assert(() => sum({array:[2]})['result'] === 2);
+        u.assert(() => sum({list:[2]})['result'] === 2);
         eval(getEval());
-        u.assert(() => sum({array:[1,2]})['result'] === 3);
+        u.assert(() => sum({list:[1,2]})['result'] === 3);
         eval(getEval());
-        u.assert(() => sum({array:[2,2]})['result'] === 4);
+        u.assert(() => sum({list:[2,2]})['result'] === 4);
         eval(getEval());
-        u.assert(() => sum({array:[2,3]})['result'] === 5);
+        u.assert(() => sum({list:[2,3]})['result'] === 5);
         eval(getEval());
-        u.assert(() => sum({array:[1,2,3]})['result'] === 6);
+        u.assert(() => sum({list:[1,2,3]})['result'] === 6);
     } catch (e) {
         u.loop(compiles, c => {
             console.log();

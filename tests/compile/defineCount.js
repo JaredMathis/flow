@@ -31,18 +31,18 @@ u.scope(__filename, x => {
 
     try {
         eval(getEval());
-        u.assert(() => count({array:[]})['result'] === 0);
-        u.assert(() => count({array:[1]})['result'] === 1);
+        u.assert(() => count({list:[]})['result'] === 0);
+        u.assert(() => count({list:[1]})['result'] === 1);
         eval(getEval());
-        u.assert(() => count({array:[2]})['result'] === 1);
+        u.assert(() => count({list:[2]})['result'] === 1);
         eval(getEval());
-        u.assert(() => count({array:[1,2]})['result'] === 2);
+        u.assert(() => count({list:[1,2]})['result'] === 2);
         eval(getEval());
-        u.assert(() => count({array:[2,2]})['result'] === 2);
+        u.assert(() => count({list:[2,2]})['result'] === 2);
         eval(getEval());
-        u.assert(() => count({array:[2,3]})['result'] === 2);
+        u.assert(() => count({list:[2,3]})['result'] === 2);
         eval(getEval());
-        u.assert(() => count({array:[1,2,3]})['result'] === 3);
+        u.assert(() => count({list:[1,2,3]})['result'] === 3);
     } catch (e) {
         u.loop(compiles, c => {
             console.log();

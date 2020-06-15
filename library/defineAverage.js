@@ -19,7 +19,7 @@ function defineAverage() {
         result = defineFunction(
             'average', 
             [
-                variable('array', typeList(typeInt())),
+                variable('list', typeList(typeInt())),
             ],
             [
                 variable('result', typeInt()),
@@ -30,11 +30,11 @@ function defineAverage() {
             ],
             steps([
                 execute('sum', 
-                    {'array':'array'},
+                    {'list':'list'},
                     {'result':'s'}
                 ),
                 execute('count', 
-                    {'array':'array'},
+                    {'list':'list'},
                     {'result':'c'}
                 ),
                 execute('divide', 

@@ -19,7 +19,7 @@ function defineCount() {
         result = defineFunction(
             'count', 
             [
-                variable('array', typeList(typeInt())),
+                variable('list', typeList(typeInt())),
             ],
             [
                 variable('result', typeInt()),
@@ -30,7 +30,7 @@ function defineCount() {
             steps([
                 set('result', newInt('0')),
                 set('one', newInt('1')),
-                loop('array', 'a', 'index',
+                loop('list', 'a', 'index',
                     execute('add', 
                         {'x':'result', 'y':'one'},
                         {'result':'result'}),

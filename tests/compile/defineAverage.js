@@ -40,23 +40,23 @@ u.scope(__filename, x => {
         // hence eval-ing... before the calls.
         eval(getEval());
         let result;
-        result = average({array:[1]})['result'];
+        result = average({list:[1]})['result'];
         u.assert(() => result === 1);
         eval(getEval());
-        result = average({array:[2]});
+        result = average({list:[2]});
         u.merge(x,{result})
         u.assert(() => result['result'] === 2);
         eval(getEval());
-        u.assert(() => average({array:[1,2]})['result'] === 1);
+        u.assert(() => average({list:[1,2]})['result'] === 1);
         eval(getEval());
-        u.assert(() => average({array:[2,2]})['result'] === 2);
+        u.assert(() => average({list:[2,2]})['result'] === 2);
         eval(getEval());
-        u.assert(() => average({array:[2,3]})['result'] === 2);
+        u.assert(() => average({list:[2,3]})['result'] === 2);
         eval(getEval());
-        u.assert(() => average({array:[1,2,3]})['result'] === 2);
+        u.assert(() => average({list:[1,2,3]})['result'] === 2);
         
         // You cannot average an empty array.
-        u.assertThrows(() => average({array:[]}));
+        u.assertThrows(() => average({list:[]}));
     } catch (e) {
         u.loop(compiles, c => {
             console.log();
