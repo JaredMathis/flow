@@ -9,8 +9,10 @@ const compileGetInMemory = require("../../library/compileGetInMemory.js");
 const compileSetInMemory = require("../../library/compileSetInMemory.js");
 const compileAndTest = require('./compileAndTest');
 
+const library = require('../../library/getLibrary')();
+
 u.scope(__filename, x => {
-    compileAndTest(text => {
+    compileAndTest(library, text => {
         let log = false;
         eval(text);
 

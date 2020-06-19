@@ -21,7 +21,7 @@ u.loop(tests, t=> test(t));
 function test(parsed) {
     u.scope(__filename, x => {
         u.scope(test.name, x => {
-            compileAndTest((text) => {
+            compileAndTest(library, (text) => {
                 eval(text);
 
                 u.merge(x, () => parsed.name);

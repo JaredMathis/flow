@@ -3,13 +3,14 @@ const u = require("wlj-utilities");
 const { EOL } = require('os');
 
 const compile = require("../../library/compile.js");
-const library = require('../../library/getLibrary')();
 
 module.exports = compileAndTest;
 
-function compileAndTest(test) {
+function compileAndTest(library, test) {
     u.scope(__filename, x => {
         u.scope(compileAndTest.name, x => {
+            u.merge(x, {library});
+            u.assert(() => u.isArray(library));
             u.merge(x, ()=>library.length);
 
             let compiles = [];    
