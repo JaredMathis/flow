@@ -40,3 +40,4 @@ require("./tests/compileGetInMemory/compileGetInMemory.js");
 require("./tests/compileSetInMemory/compileSetInMemory.js");
 require("./tests/compileGetInMemoryStorage/compileGetInMemoryStorage.js");
 require("./tests/getAvailableVariables/getAvailableVariables.js");
+require("./tests/typeBool/1.js");
