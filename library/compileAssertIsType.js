@@ -24,6 +24,11 @@ function compileAssertIsType(value, type) {
             u.assert(() => value.length === 1);
             return;
         }
+        
+        if (type.$type === 'typeBool') {
+            u.assert(() => value === true || value === false);
+            return;
+        }
 
         if (type.$type === 'typeList') {
             u.assert(() => u.isArray(value));
