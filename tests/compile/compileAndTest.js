@@ -6,7 +6,7 @@ const compile = require("../../library/compile.js");
 
 module.exports = compileAndTest;
 
-function compileAndTest(library, test) {
+function compileAndTest(library, test, enforceDependencies) {
     u.scope(__filename, x => {
         u.scope(compileAndTest.name, x => {
             u.merge(x, {library});

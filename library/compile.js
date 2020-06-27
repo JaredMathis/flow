@@ -35,37 +35,44 @@ function compile(flow, flows) {
         result.push(`${indent}// Initialize output`);
         result.push(`${indent}const outputs = {};`);
         result.push(`${indent}u.scope(${flow.name}.name, $context => {`);
-        result.push(`${indent}u.merge($context, {inputs});`);
+        let indent2 = indent + tab;
+        result.push(`${indent2}u.merge($context, {inputs});`);
 
-        result.push(`${indent}// Validate input properties`);
+        result.push(`${indent2}// Validate input properties`);
         u.loop(flow.inputs, i => {
-            result.push(`${indent}compileAssertHasOwnProperty(inputs, "${i.name}");`);
+            result.push(`${indent2}compileAssertHasOwnProperty(inputs, "${i.name}");`);
         });
-        result.push(`${indent}// Set input variables`);
+        result.push(`${indent2}// Set input variables`);
         u.loop(flow.inputs, i => {
-            result.push(`${indent}const ${i.name} = inputs["${i.name}"];`);
+            result.push(`${indent2}const ${i.name} = inputs["${i.name}"];`);
         });
-        result.push(`${indent}// Validate input types`);
+        result.push(`${indent2}// Validate input types`);
         u.loop(flow.inputs, i => {
-            result.push(`${indent}compileAssertIsType(${i.name}, ${JSON.stringify(i.type)});`);
+            result.push(`${indent2}compileAssertIsType(${i.name}, ${JSON.stringify(i.type)});`);
         });
-        result.push(`${indent}// Initialize outputs`);
+        result.push(`${indent2}// Initialize outputs`);
         u.loop(flow.outputs, o => {
-            result.push(`${indent}let ${o.name} = null;`);
+            result.push(`${indent2}let ${o.name} = null;`);
+        });
+        result.push(`${indent2}// Initialize variables`);
+        u.assertIsArray(() => flow.variables);
+        u.loop(flow.variables, v => {
+            result.push(`${indent2}let ${v.name} = null;`);
         });
 
-        result.push(`${indent}// Root statement ${flow.name}`);
-        processStatement(flow.statement, result, indent, flow, flows);
+        result.push(`${indent2}// Root statement ${flow.name}`);
+        processStatement(flow.statement, result, indent2, flow, flows);
 
-        result.push(`${indent}// Set output`);
+        result.push(`${indent2}// Set output`);
         u.loop(flow.outputs, o => {
-            result.push(`${indent}outputs["${o.name}"] = ${o.name};`);
+            result.push(`${indent2}outputs["${o.name}"] = ${o.name};`);
         });
-        result.push(`${indent}u.merge($context, {outputs});`);
+        result.push(`${indent2}u.merge($context, {outputs});`);
         u.loop(flow.outputs, o => {
-            result.push(`${indent}compileAssertIsType(${o.name}, ${JSON.stringify(o.type)});`);
+            result.push(`${indent2}compileAssertIsType(${o.name}, ${JSON.stringify(o.type)});`);
         });
 
+        // Close scope
         result.push(`${indent}});`);
         result.push(`${indent}return outputs;`);
         result.push(`}`);
@@ -122,8 +129,9 @@ function processStatement(statement, lines, indent, flow, flows) {
                 lines.push(`${indent}})();`);
             },
             loop: () => {
-                lines.push(`${indent}let ${statement.index} = 0;`);
-                lines.push(`${indent}for (const ${statement.element} of ${statement.array}) {`);
+                lines.push(`${indent}${statement.index} = 0;`);
+                lines.push(`${indent}while (${statement.index} < ${statement.array}.length) {`);
+                lines.push(`${indent}${tab}${statement.element} = ${statement.array}[${statement.index}];`);
                 processStatement(statement.statement, lines, indent + tab, flow, flows);
 
                 lines.push(`${indent + tab}${statement.index}++;`);
