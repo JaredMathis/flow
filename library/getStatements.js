@@ -12,6 +12,7 @@ function getStatements() {
         result = [
             'evaluate',
             'execute',
+            'ifElse',
             'loop',
             'set',
             'steps',

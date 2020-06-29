@@ -19,3 +19,4 @@ result.push(require("./defineSubtract")());
 result.push(require("./defineMod")());
 result.push(require("./defineSet")());
 result.push(require("./defineGet")());
+result.push(require("./defineEvenOdd")());

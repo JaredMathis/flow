@@ -42,3 +42,4 @@ module.exports.compileSetInMemory = require("./library/compileSetInMemory.js");
 module.exports.compileGetInMemoryStorage = require("./library/compileGetInMemoryStorage.js");
 module.exports.getAvailableVariables = require("./library/getAvailableVariables.js");
 module.exports.typeBool = require("./library/typeBool.js");
+module.exports.defineEvenOdd = require("./library/defineEvenOdd.js");

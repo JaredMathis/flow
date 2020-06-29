@@ -1,8 +1,8 @@
 
 const u = require("wlj-utilities");
-const { execSync } = require('child_process');
 const { EOL } = require('os');
 const fs = require('fs');
+const executeCommand = require("wlj-utilities/library/executeCommand");
 
 module.exports = createFlow;
 
@@ -17,7 +17,8 @@ function createFlow(remaining) {
         let capitalized = name[0].toUpperCase() + name.slice(1);
         let definitionName = 'define' + capitalized;
 
-        execSync('node u fn ' + definitionName);
+        let output = executeCommand('node u functionCreate ' + definitionName);
+        console.log(output);
 
         let getLibraryPath = './library/getLibrary.js';
         fs.appendFileSync(getLibraryPath, EOL);

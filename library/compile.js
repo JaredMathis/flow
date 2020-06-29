@@ -128,6 +128,19 @@ function processStatement(statement, lines, indent, flow, flows) {
                 });
                 lines.push(`${indent}})();`);
             },
+            ifElse: () => {
+                lines.push(`${indent}if (${statement.condition}) {`);
+                u.loop(statement.ifSteps, step => {
+                    u.merge(x, { step })
+                    processStatement(step, lines, indent + tab, flow, flows);
+                });
+                lines.push(`${indent}} else {`);
+                u.loop(statement.elseSteps, step => {
+                    u.merge(x, { step })
+                    processStatement(step, lines, indent + tab, flow, flows);
+                });
+                lines.push(`${indent}}`);
+            },
             loop: () => {
                 lines.push(`${indent}${statement.index} = 0;`);
                 lines.push(`${indent}while (${statement.index} < ${statement.array}.length) {`);
@@ -139,11 +152,19 @@ function processStatement(statement, lines, indent, flow, flows) {
             },
             set: () => {
                 u.assert(() => u.isDefined(statement.right));
-                u.assert(() => statement.right.$type === 'newInt');
-                let right = statement.right.value;
                 u.merge(x,() => getAvailableVariables(flow).map(v => v.name));
                 u.merge(x,() => statement.left);
                 u.assert(() => getAvailableVariables(flow).map(v => v.name).includes(statement.left));
+
+                let right;
+                if (statement.right.$type === 'newInt') {
+                    right = statement.right.value;
+                } else if (statement.right.$type === 'newText') {
+                    right = statement.right.value;
+                } else {
+                    u.assert(false);
+                }
+
                 lines.push(`${indent}${statement.left} = ${right};`);
             },
             steps: () => {
