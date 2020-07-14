@@ -30,11 +30,14 @@ function defineEvenOdd() {
             ],
             steps([
                 evaluate('m=x%2===0'),
-                ifElse('m', [
-                    set('result', newText('even'))
-                ], [
-                    set('result', newText('odd'))
-                ])
+                ifElse('m', 
+                    steps([
+                        set('result', newText('even'))
+                    ]), 
+                    steps([
+                        set('result', newText('odd'))
+                    ])
+                )
             ])
         );
     });

@@ -3,14 +3,14 @@ const u = require("wlj-utilities");
 
 module.exports = ifElse;
 
-function ifElse(condition, ifSteps, elseSteps) {
+function ifElse(condition, ifStatement, elseStatement) {
     let result;
     u.scope(ifElse.name, x => {
         result = {
             $type: 'ifElse',
             condition,
-            ifSteps,
-            elseSteps,
+            ifStatement,
+            elseStatement,
         }
     });
     return result;
