@@ -95,7 +95,7 @@ function processStatement(statement, lines, indent, flow, flows) {
         u.merge(x, { fnsNames });
 
         let types = {
-            evaluate: () => lines.push(`${indent}eval("${statement.expression}")`),
+            evaluate: () => lines.push(`${indent}eval("${statement.expression}");`),
             execute: () => {
                 u.merge(x, () => statement.inputs);
                 u.merge(x, () => statement.outputs);
